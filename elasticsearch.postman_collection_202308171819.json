@@ -1,0 +1,798 @@
+{
+	"info": {
+		"_postman_id": "84e45e98-7387-421c-8a39-b6a55307de2e",
+		"name": "elasticsearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14601064"
+	},
+	"item": [
+		{
+			"name": "_cluster/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_cluster/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cluster",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_cat/nodes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_cat/nodes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cat",
+						"nodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "_cat/indices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_cat/indices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cat",
+						"indices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"settings\": {\n    \"index\": {\n      \"number_of_shards\": 3,  \n      \"number_of_replicas\": 2 \n    }\n  },\n    \"mappings\": {\n    \"properties\": {\n      \"field1\": { \"type\": \"text\" },\n      \"email\": {\"type\":\"keyword\"}\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index"
+					]
+				},
+				"description": "创建index"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_mapping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_mapping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_mapping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_mapping",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"properties\": {\n    \"email\": {\n      \"type\": \"keyword\"\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_mapping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_mapping"
+					]
+				},
+				"description": "为index新增field"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_doc/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"field1\": \"Aron\",\n    \"email\":\"01@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_doc/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_doc",
+						"1"
+					]
+				},
+				"description": "新增document"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_doc",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"field1\": \"come haha, test come\",\n    \"email\":\"05@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_doc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_doc"
+					]
+				},
+				"description": "新增document，但url不带ID了，让ES自己产"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_doc Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Aron\",\n    \"age\": 29,\n    \"job\": \"student\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_doc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_doc"
+					]
+				},
+				"description": "如果新增的field是没有预先定义的，那么ES会自己判断field"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_create/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"field1\": \"Aron\",\n    \"email\":\"01@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_create/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_create",
+						"1"
+					]
+				},
+				"description": "也是创建document，但是用\"create\"方法。\n\n与使用\"_doc\"方法相比，就是如果遇到ID已经存在时，\"create\"方法会回传失败，而\"_doc\"方法则会覆盖。\n\n因此若是想要用後面的覆蓋前面的，就可以使用_doc，若是希望能夠check是否存在該id，則可以透過_create確認。"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_doc/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_doc/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_doc",
+						"1"
+					]
+				},
+				"description": "find document by id"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_doc/{id}?_source_includes=name,job",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_doc/ECKdAYoBSonHVGfWB87z?_source_includes=name,job",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_doc",
+						"ECKdAYoBSonHVGfWB87z"
+					],
+					"query": [
+						{
+							"key": "_source_includes",
+							"value": "name,job"
+						}
+					]
+				},
+				"description": "以ID搜寻特定document，但只需要特定field，不需要全部"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-index/_update/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"doc\": {\n        \"name\": \"sron\",\n        \"update_field_1\":123\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_update/ECKdAYoBSonHVGfWB87z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_update",
+						"ECKdAYoBSonHVGfWB87z"
+					]
+				},
+				"description": "update的部分，與前面PUT _doc差別在於，PUT _doc是有更新效果，但是是整個覆蓋；update則可以擴充原先的資料"
+			},
+			"response": []
+		},
+		{
+			"name": "{index}/_mget",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"docs\": [\n    {\n      \"_index\": \"demo-index\",\n      \"_id\": \"1\"\n    },\n    {\n      \"_index\": \"demo-index\",\n      \"_id\": \"2\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_mget",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_mget"
+					]
+				},
+				"description": "一次获取多笔document"
+			},
+			"response": [
+				{
+					"name": "{index}/_mget",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ids\" : [\"1\", \"2\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-index/_mget",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-index",
+								"_mget"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "demo-index/_search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_search"
+					]
+				},
+				"description": "Returns search hits that match the query defined in the request.\n\n[https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html)"
+			},
+			"response": [
+				{
+					"name": "demo-index/_search",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n      \"query_string\":{\n         \"query\":\"aron\" \n      }\n   }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-index/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-index",
+								"_search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "demo-index/_search",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"aron\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-index/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-index",
+								"_search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "demo-index/_search",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"aron\",\n      \"default_field\": \"field1\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-index/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-index",
+								"_search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "_search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_search"
+					]
+				},
+				"description": "搜寻，但不限index\n\n  \n[https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)"
+			},
+			"response": []
+		},
+		{
+			"name": "_analyze?",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"analyzer\": \"standard\",\n    \"text\": \"Mastering Elasticsearch , elasticsearch in Action\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/_analyze?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_analyze"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				},
+				"description": "# 分词器\n\n- Standard Analyzer - 默认分词器，按词切分，小写处理\n    \n- Simple Analyzer - 按照非字母切分（符号被过滤），小写处理\n    \n- Stop Analyzer - 小写处理，停用词过滤（the ，a，is）\n    \n- Whitespace Analyzer - 按照空格切分，不转小写\n    \n- Keyword Analyzer - 不分词，直接将输入当做输出\n    \n- Patter Analyzer - 正则表达式，默认 \\\\W+\n    \n- Language - 提供了 30 多种常见语言的分词器\n    \n- Customer Analyzer 自定义分词器\n    \n\n————————————————  \n原文作者：CrazyZard  \n转自链接：[https://learnku.com/articles/35136](https://learnku.com/articles/35136)  \n版权声明：著作权归作者所有。商业转载请联系作者获得授权，非商业转载请保留以上作者信息和原文链接。"
+			},
+			"response": [
+				{
+					"name": "_analyze?",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"analyzer\": \"standard\",\n    \"text\": \"Mastering Elasticsearch , elasticsearch in Action\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_analyze?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "_analyze?（icu_analyzer)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"analyzer\": \"icu_analyzer\",\n    \"text\": \"哈啰你好吗，衷心感谢\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_analyze?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "demo-index/_analyze?",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"field\": \"field1\",\n    \"text\": \"hello world\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-index/_analyze?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index",
+						"_analyze"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				},
+				"description": "指定索引的字段进行测试"
+			},
+			"response": []
+		},
+		{
+			"name": "_analyze?",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"analyzer\": \"standard\",\n\"text\": \"2 running Quick brown-foxes leap over lazy dogs in the summer evening.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/_analyze?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_analyze"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				},
+				"description": "- 默认分词器\n    \n- 按词处理\n    \n- 小写处理"
+			},
+			"response": []
+		},
+		{
+			"name": "_xpack",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_xpack",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_xpack"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

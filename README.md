@@ -13,3 +13,10 @@
     - keyword: 代表該 field 為 exact value，例如 id, email，可用來排序以及 wildcard 搜尋
     - text: 代表該 field 為 full-text。
     - numeric: 代表該 field 為數字，可用於 aggregate 以及 range 搜尋。
+- 如果要支援中文分词，得另外安装扩展
+    ```bash
+    docker-compose exec es01 bash
+    bin/elasticsearch-plugin install analysis-icu
+
+    # 另外es02, es03也要
+    ```
