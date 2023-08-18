@@ -4,7 +4,7 @@
 - [我把ElasticSearch上雲了 系列](https://ithelp.ithome.com.tw/users/20130639/ironman/3747)
 - [ElasticSearch 全文字搜尋引擎 — 基本概念介紹](https://medium.com/happy-friday/elasticsearch-%E5%85%A8%E6%96%87%E5%AD%97%E6%90%9C%E5%B0%8B%E5%BC%95%E6%93%8E-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%8B%E7%B4%B9-f38a0cab9717)
 - [笔记六：通过 Analyzer 进行分词](https://learnku.com/articles/35136)
-
+- [要搞懂 Elasticsearch Match Query，看这篇就够了](https://segmentfault.com/a/1190000017110948)
 # Tip
 - Index: 代表文件資料庫，相當於 RDBMS 中的 Database。
 - Type: 代表文件類型，相當於 RDBMS 中的 Table。
