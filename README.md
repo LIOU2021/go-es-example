@@ -6,6 +6,7 @@
 - [笔记六：通过 Analyzer 进行分词](https://learnku.com/articles/35136)
 - [要搞懂 Elasticsearch Match Query，看这篇就够了](https://segmentfault.com/a/1190000017110948)
 # Tip
+- GUI: http://localhost:8080
 - Index: 代表文件資料庫，相當於 RDBMS 中的 Database。
 - Type: 代表文件類型，相當於 RDBMS 中的 Table。
 - Document: 代表文件資料，ES 使用 JSON 格式來儲存文件，相當於 RDBMS 中的 Row。
