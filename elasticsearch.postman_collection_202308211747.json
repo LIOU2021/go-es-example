@@ -7,6 +7,22 @@
 	},
 	"item": [
 		{
+			"name": "http://localhost:9200",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200"
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "_cluster/health",
 			"request": {
 				"method": "GET",
@@ -513,7 +529,7 @@
 					"body": null
 				},
 				{
-					"name": "query match",
+					"name": "query match-1",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -526,7 +542,46 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"query\": {\n    \"match\": {\n      \"field1\": {\n        \"query\": \"name hello\",\n        \"operator\": \"or\"\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"query\": {\n    \"match\": {\n      \"field1\": {\n        \"query\": \"name hello\", // name or hello\n        \"operator\": \"or\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-index/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-index",
+								"_search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "query match-2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": {\n    \"match\": {\n      \"field1\": {\n        \"query\": \"name hello\", // 原本预设是or，改成and\n        \"operator\": \"AND\"\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -760,7 +815,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"filter\": [\n                {\n                    \"term\": { // term用于精确查询，如果要用or，请改用match\n                        \"field1\": \"ha\"\n                    }\n                },\n                {\n                    \"term\": {\n                        \"email\": \"10@gmail.com\"\n                    }\n                }\n            ]\n        }\n    }\n}\n",
+							"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"filter\": [ // 底下term的条件都得符合，是and的概念\n                {\n                    \"term\": { // term用于精确查询，如果要用or，请改用match\n                        \"field1\": \"ha\"\n                    }\n                },\n                {\n                    \"term\": {\n                        \"email\": \"10@gmail.com\"\n                    }\n                }\n            ]\n        }\n    }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -932,6 +987,135 @@
 					"header": null,
 					"cookie": [],
 					"body": null
+				},
+				{
+					"name": "_analyze?（取代）-1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  //會根據 mapping 設定進行字串的取代\n  \"char_filter\": [\n      {\n        \"type\" : \"mapping\",\n        \"mappings\" : [ \"- => _\"]\n      }\n  ],\n\n  //標準分詞\n  \"tokenizer\": \"standard\",\n  \n  \"text\": \"123-456, I-test! test-990 650-555-1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_analyze?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "_analyze?(取代）-2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  //透過 mapping 將表情符號替換成一般字串\n  \"char_filter\": [\n      {\n        \"type\" : \"mapping\",\n        \"mappings\" : [ \":) => happy\", \":( => sad\"]\n      }\n    ],\n\n  \"tokenizer\": \"standard\",\n  \n    \"text\": [\"I am felling :)\", \"Feeling :( today\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_analyze?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "_analyze?(取代）-3",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  //使用 regular express 進行資料處理\n  \"char_filter\": [\n      {\n        \"type\" : \"pattern_replace\",\n        \"pattern\" : \"http://(.*)\",\n        \"replacement\" : \"$1\"\n      }\n    ],\n\n  \"tokenizer\": \"standard\",\n  \n    \"text\" : \"http://www.elastic.co\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_analyze?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
 				}
 			]
 		},
@@ -1027,6 +1211,337 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:9200/{index1,index2}/_search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-index,demo-index2/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-index,demo-index2",
+						"_search"
+					]
+				},
+				"description": "可以查询 索引1 and 索引2 效果"
+			},
+			"response": []
+		},
+		{
+			"name": "{index pattern}/_search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/demo-in*/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-in*",
+						"_search"
+					]
+				},
+				"description": "搜寻索引时可以用万用字元"
+			},
+			"response": []
+		},
+		{
+			"name": "movie/_search?q=2012&df=title&sort=year:desc&from=0&size=10&timeout=1s",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"profile\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/movie/_search?q=2012&df=title&sort=year:desc&from=0&size=10&timeout=1s",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "2012"
+						},
+						{
+							"key": "df",
+							"value": "title"
+						},
+						{
+							"key": "sort",
+							"value": "year:desc"
+						},
+						{
+							"key": "from",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "timeout",
+							"value": "1s"
+						}
+					]
+				},
+				"description": "- q=2012: 执行包含关键词 \"2012\" 的查询。\n    \n- df=title: 设置默认字段为 \"title\"，default field。\n    \n- sort=year:desc: 对结果进行按照 \"year\" 字段降序排序。\n    \n- from=0和size=10 : 返回查询的结果从第0条到第10条。\n    \n- timeout=1s: 设置查询超时时间为 1 秒。\n    \n- profile=\"true\": 这个参数用于启用查询性能分析，允许你分析查询的性能和资源使用情况。"
+			},
+			"response": [
+				{
+					"name": "body 是空的",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/movie/_search?q=2012&df=title&sort=year:desc&from=0&size=10&timeout=1s",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"movie",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "2012"
+								},
+								{
+									"key": "df",
+									"value": "title"
+								},
+								{
+									"key": "sort",
+									"value": "year:desc"
+								},
+								{
+									"key": "from",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "timeout",
+									"value": "1s"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "movie/_search?q=title:Beautiful Mind",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/movie/_search?q=title:Beautiful Mind",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "title:Beautiful Mind"
+						}
+					]
+				},
+				"description": "- 在 title 中尋找 \"Beautiful OR Mind\"\n- 搜尋效果 => TermQuery(title:beautiful) + DisjunctionMaxQuery(在所有 term 中搜尋 mind)\n- search type = Boolea\n"
+			},
+			"response": []
+		},
+		{
+			"name": "movie/_search?q=title:\"Beautiful Mind\"",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/movie/_search?q=title:\"Beautiful Mind\"",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "title:\"Beautiful Mind\""
+						}
+					]
+				},
+				"description": "- 搜寻效果为 \"Beautiful and Mind\"\n    \n- [ref](https://godleon.github.io/blog/Elasticsearch/Elasticsearch-getting-started/)"
+			},
+			"response": []
+		},
+		{
+			"name": "movie/_search?q=title:beautifl~1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/movie/_search?q=title:beautifl~1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "title:beautifl~1"
+						}
+					]
+				},
+				"description": "- 即便beautiful打错字，依然能查询到"
+			},
+			"response": []
+		},
+		{
+			"name": "movie/_search?q=title:\"Lord Rings\"~10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/movie/_search?q=title:\"Lord Rings\"~10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "title:\"Lord Rings\"~10"
+						}
+					]
+				},
+				"description": "在Elasticsearch查询中，波浪符号（\\~）后面的数字表示**近似搜索的编辑距离**。编辑距离是指通过插入、删除或替换一个字符，将一个字符串转换为另一个字符串所需的最少操作数。\n\n在您的查询中，`\"Lord Rings\"~10` 表示在\"Lord Rings\"这个短语中，允许的最大编辑距离为10。换句话说，Elasticsearch将尝试查找与\"Lord Rings\"在最多10个编辑操作内相似的文档。"
+			},
+			"response": []
+		},
+		{
+			"name": "movie/_search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": {\n    \"match_phrase\": {\n      \"title\":{\n        \"query\": \"one love\"\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/movie/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"movie",
+						"_search"
+					]
+				},
+				"description": "- 必須按照順序出現，中间不能夹杂其他词\n    \n- 是 and 条件"
+			},
+			"response": [
+				{
+					"name": "slop",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": {\n    \"match_phrase\": {\n      \"title\":{\n        \"query\": \"one love\",\n        \"slop\": 1 // 中间可以夹杂一个其他词汇\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/movie/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"movie",
+								"_search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		}
 	]
 }
