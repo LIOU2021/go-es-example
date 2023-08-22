@@ -1,3 +1,13 @@
+# start
+- 7.x 跟8.x 版本差异许多所以我分成两个yml，执行如下
+    - .env是给8.x版本用的
+    ```bash
+    docker-compose -f docker-compose_7.x.yml up -d
+    docker-compose -f docker-compose_8.x.yml up -d
+    ```
+- 如果是8.x版本
+    - es: https://localhost:9200
+    - kibana: http://localhost:5601
 # Ref
 - [Install Elasticsearch with Docker](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docker.html)
 - [This is the official Go client for Elasticsearch.](https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/overview.html)
@@ -8,6 +18,9 @@
 - [[Elasticsearch] 基本概念 & 搜尋入門](https://godleon.github.io/blog/Elasticsearch/Elasticsearch-getting-started/)
 - [Getting started with the Elastic Stack and Docker-Compose](https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose)
 - [Docker-Compose 建立 Elasticsearch 與 Kibana 服務](https://kevintsengtw.blogspot.com/2018/07/docker-compose-elasticsearch-kibana.html)
+- [Elasticsearch：使用 Docker compose 来一键部署 Elastic Stack 8.x](https://juejin.cn/post/7082735047824015397)
+- [docker-compose快速部署elasticsearch-8.x集群+kibana](https://blog.csdn.net/boling_cavalry/article/details/125232858)
+- [如何在 Kibana 8 與 Elasticsearch 8 上看到資料](https://blog.yowko.com/discover-elasticsearch8-kibana8/)
 
 # services
 - GUI: http://localhost:8080
