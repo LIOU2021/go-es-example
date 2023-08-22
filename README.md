@@ -28,3 +28,64 @@
 
     # 另外es02, es03也要
     ```
+
+# Kibana
+- 如果要作一个log viewer的话，index的mapping结构大概如下，重点是timestamp这个，这会在kibana预设作为时间读取的判断，其余的栏位其实可以参考kibana架设起来后，可以尝试汇入example data，看官方mapping怎用的
+    ```json
+    {
+        "settings": {
+            "index": {
+                "number_of_shards": 3,
+                "number_of_replicas": 2
+            }
+        },
+        "mappings": {
+            "properties": {
+                "@timestamp": {
+                    "type": "alias",
+                    "path": "timestamp"
+                },
+                "message": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "url": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "response": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "request": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "timestamp": {
+                    "type": "date"
+                }
+            }
+        }
+    }
+    ```
+- 上述步骤完成后，kibana还需要创建"index pattern"，有点像是一个群组，指定要读取哪些ES的index，通常"index pattern"会取名类似"log*"，然后要作log的es的index，可以用每天下去分类，index名称就会变成"log-2023-08-22"这样
