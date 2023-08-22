@@ -109,7 +109,39 @@
 				},
 				"description": "创建index"
 			},
-			"response": []
+			"response": [
+				{
+					"name": "demo-log-index",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"settings\": {\n        \"index\": {\n            \"number_of_shards\": 3,\n            \"number_of_replicas\": 2\n        }\n    },\n    \"mappings\": {\n        \"properties\": {\n            \"@timestamp\": {\n                \"type\": \"alias\",\n                \"path\": \"timestamp\"\n            },\n            \"message\": {\n                \"type\": \"text\",\n                \"fields\": {\n                    \"keyword\": {\n                        \"type\": \"keyword\",\n                        \"ignore_above\": 256\n                    }\n                }\n            },\n            \"url\": {\n                \"type\": \"text\",\n                \"fields\": {\n                    \"keyword\": {\n                        \"type\": \"keyword\",\n                        \"ignore_above\": 256\n                    }\n                }\n            },\n            \"response\": {\n                \"type\": \"text\",\n                \"fields\": {\n                    \"keyword\": {\n                        \"type\": \"keyword\",\n                        \"ignore_above\": 256\n                    }\n                }\n            },\n            \"request\": {\n                \"type\": \"text\",\n                \"fields\": {\n                    \"keyword\": {\n                        \"type\": \"keyword\",\n                        \"ignore_above\": 256\n                    }\n                }\n            },\n            \"timestamp\": {\n                \"type\": \"date\"\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/demo-log-index",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"demo-log-index"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "demo-index/_mapping",
@@ -215,6 +247,36 @@
 					"port": "9200",
 					"path": [
 						"demo-index",
+						"_doc"
+					]
+				},
+				"description": "新增document，但url不带ID了，让ES自己产"
+			},
+			"response": []
+		},
+		{
+			"name": "demo-log-index/_doc",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"test error2 - ha\",\n    \"url\": \"/api/v1/hello-2\",\n    \"response\": \"pong\",\n    \"request\": \"ping\",\n    \"timestamp\": \"2023-08-22T05:41:12.912Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/demo-log-index/_doc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"demo-log-index",
 						"_doc"
 					]
 				},
