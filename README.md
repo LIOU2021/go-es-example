@@ -6,8 +6,14 @@
 - [笔记六：通过 Analyzer 进行分词](https://learnku.com/articles/35136)
 - [要搞懂 Elasticsearch Match Query，看这篇就够了](https://segmentfault.com/a/1190000017110948)
 - [[Elasticsearch] 基本概念 & 搜尋入門](https://godleon.github.io/blog/Elasticsearch/Elasticsearch-getting-started/)
-# Tip
+- [Getting started with the Elastic Stack and Docker-Compose](https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose)
+- [Docker-Compose 建立 Elasticsearch 與 Kibana 服務](https://kevintsengtw.blogspot.com/2018/07/docker-compose-elasticsearch-kibana.html)
+
+# services
 - GUI: http://localhost:8080
+- Kibana: http://localhost:5601
+- Elasticsearch: http://localhost:9200
+# Tip
 - Index: 代表文件資料庫，相當於 RDBMS 中的 Database。
 - Type: 代表文件類型，相當於 RDBMS 中的 Table。
 - Document: 代表文件資料，ES 使用 JSON 格式來儲存文件，相當於 RDBMS 中的 Row。
