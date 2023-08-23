@@ -60,7 +60,37 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "_cat/nodes?v",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/_cat/nodes?v",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"nodes"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "_cat/indices",
@@ -261,7 +291,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"message\": \"test error2 - ha\",\n    \"url\": \"/api/v1/hello-2\",\n    \"response\": \"pong\",\n    \"request\": \"ping\",\n    \"timestamp\": \"2023-08-22T05:41:12.912Z\"\n}",
+					"raw": "{\n    \"message\": \"test error1 - ha\",\n    \"url\": \"/api/v1/hello-1\",\n    \"response\": \"pong\",\n    \"request\": \"ping\",\n    \"timestamp\": \"2023-08-22T05:43:12.912Z\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1604,6 +1634,48 @@
 					"body": null
 				}
 			]
+		},
+		{
+			"name": "https://localhost:9200/_cluster/health?pretty",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9200/_cluster/health?pretty",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cluster",
+						"health"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				},
+				"description": "- 带有验证的curl elasticsearch\n```bash\ncurl -X GET --user elastic:password \"https://localhost:9200/_cluster/health?pretty\"\n```"
+			},
+			"response": []
 		}
 	]
 }
