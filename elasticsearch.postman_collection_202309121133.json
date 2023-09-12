@@ -1676,6 +1676,35 @@
 				"description": "- 带有验证的curl elasticsearch\n```bash\ncurl -X GET --user elastic:password \"https://localhost:9200/_cluster/health?pretty\"\n```"
 			},
 			"response": []
+		},
+		{
+			"name": "_bulk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"index\":{\"_index\":\"books\"}}\n{\"name\":\"西游记3\",\"author\":\"吴承恩3\",\"price\":\"40\"}\n{\"index\":{\"_index\":\"books\"}}\n{\"name\":\"三国演义3\",\"author\":\"罗贯中3\",\"price\":\"41\"}\n{\"index\":{\"_index\":\"books\"}}\n{\"name\":\"水浒传3\",\"author\":\"施耐庵3\",\"price\":\"42\"}\n{\"index\":{\"_index\":\"books\"}}\n{\"name\":\"红楼梦3\",\"author\":\"曹雪芹3\",\"price\":\"43\"}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/_bulk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_bulk"
+					]
+				},
+				"description": "# 批量\n\n- [https://blog.51cto.com/u_15280110/3196054](https://blog.51cto.com/u_15280110/3196054)\n    \n- [https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)"
+			},
+			"response": []
 		}
 	]
 }
